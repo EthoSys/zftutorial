@@ -1,0 +1,94 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+ $title = 'My albums';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ <p>
+     <a href="<?php echo $this->url('album', array('action'=>'add'));?>">Add new album</a>
+ </p>
+ 
+ <p>
+     
+     <?php if(isset($this->messages)):?>
+        <div class="grid_12">
+        <?php foreach($this->messages as $message):?>
+            <div id="site_info">
+                <div class="box">
+                <?php if(isset($message["error"])):?>
+                    <p><?php echo $message["error"]?></p>
+                <?php elseif(isset($message["ok"])):?>
+                    <p><?php echo $message["ok"]?></p>
+                <?php endif?>
+                </div>
+            </div>
+        <?php endforeach?>
+        </div>
+    <?php endif?>
+ </p>    
+
+ <p>
+     
+     <?php
+ // add at the end of the file after the table
+ echo $this->paginationControl(
+     // the paginator object
+     $this->paginator,
+     // the scrolling style
+     'sliding',
+     // the partial to use to render the control
+     array('partial/paginator.phtml', 'Album'),
+     // the route to link to when a user clicks a control link
+     array(
+         'route' => 'album'
+     )
+ );
+ ?>
+ </p>
+ 
+ 
+ <table class="table">
+     <tr>
+         <th>Title</th>
+         <th>Artist</th>
+         <th>&nbsp;</th>
+     </tr>
+     <?php foreach ($this->paginator as $album) : // <-- change here! ?>
+         <tr>
+             <td><?php echo $this->escapeHtml($album->title);?></td>
+             <td><?php echo $this->escapeHtml($album->artist);?></td>
+             <td>
+                 <a href="<?php echo $this->url('album',
+                     array('action' => 'edit', 'id' => $album->id));?>">Edit</a>
+                 <a href="<?php echo $this->url('album',
+                     array('action' => 'delete', 'id' => $album->id));?>">Delete</a>
+             </td>
+         </tr>
+     <?php endforeach; ?>
+ </table>
+ 
+ 
+ <p>
+     
+     <?php
+ // add at the end of the file after the table
+ echo $this->paginationControl(
+     // the paginator object
+     $this->paginator,
+     // the scrolling style
+     'sliding',
+     // the partial to use to render the control
+     array('partial/paginator.phtml', 'Album'),
+     // the route to link to when a user clicks a control link
+     array(
+         'route' => 'album'
+     )
+ );
+ ?>
+ </p>
